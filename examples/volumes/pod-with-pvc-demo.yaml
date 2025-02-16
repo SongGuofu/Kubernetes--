@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-dyn-pvc
+spec:
+  containers:
+  - name: redis
+    image: redis:7-alpine
+    imagePullPolicy: IfNotPresent
+    ports:
+    - containerPort: 6379
+      name: redisport
+    volumeMounts:
+    - mountPath: /data
+      name: redis-pvc-vol
+  volumes:
+  - name: redis-pvc-vol
+    persistentVolumeClaim:
+      claimName: nfs-csi
